@@ -12,7 +12,7 @@ This version of Savage Beast has been tested working in Rails 2.3.
 
 Add in your enviroment.rb
 
-  config.gem 'savage-beast', :lib => 'beast'
+  config.gem 'savage-beast', :lib => 'beast', :source => 'http://gemcutter.org'
 
 Run
 
