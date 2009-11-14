@@ -16,7 +16,7 @@ class BeastGenerator < Rails::Generator::Base
         Dir[templates_dir + 'public' + asset + '*'].each do |f|
           from_file = Pathname(f).relative_path_from(templates_dir)
           dirname, basename = from_file.split
-          f.file(file, dirname + 'savage_beast' + basename)
+          m.file(file, dirname + 'savage_beast' + basename)
         end
       }
       
