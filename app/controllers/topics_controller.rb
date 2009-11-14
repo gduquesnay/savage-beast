@@ -1,4 +1,4 @@
-class TopicsController < ApplicationController
+class TopicsController < BeastApplicationController
   before_filter :find_forum_and_topic, :except => :index
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
 

@@ -1,59 +1,59 @@
 require 'md5'
 
 module SavageBeast
-	module ApplicationHelper
-		# convenient plugin point
-		def head_extras
-		end
-
+  module ApplicationHelper
+    # convenient plugin point
+    def head_extras
+    end
+    
 =begin
 		def submit_tag(value = "Save Changes"[], options={} )
-			or_option = options.delete(:or)
+                  or_option = options.delete(:or)
 			return super + "<span class='button_or'>"+"or"[]+" " + or_option + "</span>" if or_option
 			super
 		end
 =end
 
 		def ajax_spinner_for(id, spinner="spinner.gif")
-			"<img src='/plugin_assets/savage_beast/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
+                  "<img src='/plugin_assets/savage_beast/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
 		end
 
 		def avatar_for(user, size=32)
-			begin
-				image_tag "http://www.gravatar.com/avatar.php?gravatar_id=#{MD5.md5(user.email)}&rating=PG&size=#{size}", :size => "#{size}x#{size}", :class => 'photo'
-			rescue
-				image_tag "http://www.gravatar.com/avatar.php?rating=PG&size=#{size}", :size => "#{size}x#{size}", :class => 'photo'
-			end
+                  begin
+                    image_tag "http://www.gravatar.com/avatar.php?gravatar_id=#{MD5.md5(user.email)}&rating=PG&size=#{size}", :size => "#{size}x#{size}", :class => 'photo'
+                  rescue
+                    image_tag "http://www.gravatar.com/avatar.php?rating=PG&size=#{size}", :size => "#{size}x#{size}", :class => 'photo'
+                  end
 		end
 
 		def beast_user_name
-			(current_user ? current_user.display_name : "Guest" )
+                  (current_user ? current_user.display_name : "Guest" )
 		end
 
 		def beast_user_link
-			user_link = (current_user ? user_path(current_user) : "#")
+                  user_link = (current_user ? user_path(current_user) : "#")
 			link_to beast_user_name, user_link
 		end
 
 		def feed_icon_tag(title, url)
-			(@feed_icons ||= []) << { :url => url, :title => title }
-			link_to image_tag('savage_beast/feed-icon.png', :size => '14x14', :style => 'margin-right:5px', :alt => "Subscribe to #{title}"), url
+                  (@feed_icons ||= []) << { :url => url, :title => title }
+                  link_to image_tag('savage_beast/feed-icon.png', :size => '14x14', :style => 'margin-right:5px', :alt => "Subscribe to #{title}"), url
 		end
 
 		def search_posts_title
-			returning(params[:q].blank? ? 'Recent Posts'[] : "Searching for"[] + " '#{h params[:q]}'") do |title|
-				title << " "+'by {user}'[:by_user,h(User.find(params[:user_id]).display_name)] if params[:user_id]
-				title << " "+'in {forum}'[:in_forum,h(Forum.find(params[:forum_id]).name)] if params[:forum_id]
-			end
+                  returning(params[:q].blank? ? t(:recent_posts) : t(:searching_for) + " '#{h params[:q]}'") do |title|
+                    title << " "+t(:by_user, :user => h(User.find(params[:user_id]).display_name)) if params[:user_id]
+                    title << " "+t(:in_forum, :forum => h(Forum.find(params[:forum_id]).name)) if params[:forum_id]
+                  end
 		end
 
 		def topic_title_link(topic, options)
-			if topic.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/
-				"<span class='flag'>#{$1}</span>" +
-				link_to(h($2.strip), forum_topic_path(@forum, topic), options)
-			else
-				link_to(h(topic.title), forum_topic_path(@forum, topic), options)
-			end
+                  if topic.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/
+                    "<span class='flag'>#{$1}</span>" +
+                      link_to(h($2.strip), forum_topic_path(@forum, topic), options)
+                  else
+                    link_to(h(topic.title), forum_topic_path(@forum, topic), options)
+                  end
 		end
 
 		def search_posts_path(rss = false)

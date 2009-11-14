@@ -1,4 +1,4 @@
-class ModeratorsController < ApplicationController
+class ModeratorsController < BeastApplicationController
   before_filter :login_required
 
   def destroy

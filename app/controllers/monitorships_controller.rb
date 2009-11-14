@@ -1,4 +1,4 @@
-class MonitorshipsController < ApplicationController
+class MonitorshipsController < BeastApplicationController
   before_filter :login_required
 
   cache_sweeper :monitorships_sweeper, :only => [:create, :destroy]
