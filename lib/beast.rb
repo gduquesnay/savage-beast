@@ -4,13 +4,6 @@ ActionController::Base.send :include, SavageBeast::AuthenticationSystem
 # makes it be unincluded after the second request when working in development environment.
 #ApplicationHelper.send :include, SavageBeast::ApplicationHelper
 
-# FIX for engines model reloading issue in development mode
-if ENV['RAILS_ENV'] != 'production'
-  load_paths.each do |path|
-    ActiveSupport::Dependencies.load_once_paths.delete(path)
-  end
-end
-
 # Include your application configuration below
 # @WBH@ would be nice for this to not be necessary somehow...
 # PASSWORD_SALT = '48e45be7d489cbb0ab582d26e2168621' unless Object.const_defined?(:PASSWORD_SALT)
@@ -18,21 +11,22 @@ Module.class_eval do
   def expiring_attr_reader(method_name, value)
     class_eval(<<-EOS, __FILE__, __LINE__)
       def #{method_name}
-        class << self; attr_reader :#{method_name}; end
-          @#{method_name} = eval(%(#{value}))
+        class << self;
+          attr_reader :#{method_name};
         end
-        EOS
-   end
-      
+        @#{method_name} = eval(%(#{value}))
+      end
+    EOS
+    end
 end
 
 
 # All this is given in engines plugin
 # Define the means by which to add our own routing to Rails' routing
-    class ActionController::Routing::RouteSet::Mapper
-	def from_plugin(name)
-          eval File.read(File.join(RAILS_ROOT, "vendor/plugins/#{name}/routes.rb"))
-	end
+class ActionController::Routing::RouteSet::Mapper
+  def from_plugin(name)
+    eval File.read(File.join(RAILS_ROOT, "vendor/plugins/#{name}/routes.rb"))
+  end
 end
 
 #--------------------------------------------------------------------------------
@@ -67,8 +61,8 @@ end
 #ActionView::Base.send :include, PostsHelper
 #ActionView::Base.send :include, TopicsHelper
 #--------------------------------------------------------------------------------
-      
-I18n.load_path << Dir[File.join(File.dirname(__FILE__), 'lang', '*.{rb,yml}')] 
+
+I18n.load_path << Dir[File.join(File.dirname(__FILE__), '..', 'lang', '*.{rb,yml}')] 
 
 begin
   require 'gettext/rails'

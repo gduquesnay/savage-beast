@@ -4,18 +4,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title><%= "#{h @page_title} - " if @page_title %><%= 'Beast'[:beast_title] %></title>
-    <%= stylesheet_link_tag 'savage_beast/display2' %>
+    <%= stylesheet_link_tag 'savage_beast/display' %>
     
     <%# Assumption: If you're a rails project, you already have your own version of these, and don't need the SB version %>
     <%= javascript_include_tag "prototype", "effects" %>
-    <%= javascript_include_tag "beast" %>
+    <%= javascript_include_tag "savage_beast/beast" %>
     <% unless @feed_icons.blank? -%>
     <% @feed_icons.each do |feed| -%>
     <%= auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" %>
     <% end -%>
     <% end -%>
     <%= head_extras %>
-    <link rel="search" type="application/opensearchdescription+xml" href="http://<%= request.host_with_port %>/open_search.xml" />
   </head>
   <body>
     <div id="header">

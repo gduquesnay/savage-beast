@@ -61,13 +61,13 @@ en:
   next_page: Next Page
   next: "Next &raquo;"
   previous: "&laquo; Previous"
-  topics_count: 
+  topics_count:
     one: "{{count}} topic"
     other: "{{count}} topics"
-  posts_count: 
+  posts_count:
     one: "{{count}} post"
-    other: {{count}} posts"
-  voices_count: 
+    other: "{{count}} posts"
+  voices_count:
     one: "{{count}} voice"
     other: "{{count}} voices"
   posts_count_found: 
@@ -151,10 +151,6 @@ en:
 
   topics: topics
   posts: posts
-  topic_count: "{{count}} topic"
-  post_count: "{{count}} post"
-  voice_count: "{{count}} voice"
-  post_count_found: "{{count}} post found"
 
   comma_locked_topic: ", this topic is locked."
 
